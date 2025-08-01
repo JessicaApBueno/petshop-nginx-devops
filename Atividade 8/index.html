@@ -3,100 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Cuidados Pets</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <header>
-        <img src="./logo.png" alt="Logo Cuidados Pets" class="logo">
+     <header class="header">
+        <img src="./imagens/logo.png" alt="Logo do Blog">
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#racas">Raças</a></li>
-            <li><a href="#dicas">Dicas</a></li>
-            <li><a href="#contatos">Contatos</a></li>
-        </ul>
+    <nav class="navbar">
+        <a href="#racas">Raças</a>
+        <a href="#dicas">Dicas</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#pesquisa">Pesquisa</a>
+        <a href="#conversor">Conversor</a>
+        <a href="#contato">Contato</a>
     </nav>
 
-    <div class="welcome">
-        <h1>Cuidados Pets</h1>
-        <p>Bem-vindo ao nosso blog sobre cachorros de estimação! Neste espaço, você encontrará informações e dicas úteis sobre como cuidar do seu melhor amigo canino.</p>
-    </div>
+    <main class="content">
+        <section class="welcome-section">
+            <h1 class="section-title">Cuidados Pets</h1>
+            <p>Bem-vindo ao nosso blog sobre cachorros de estimação! Neste espaço, você encontrará informações e dicas úteis sobre como cuidar do seu melhor amigo canino.</p>
+        </section>
 
-    <section id="racas">
-        <h2>Raças de cachorro</h2>
-        <div class="breeds-container">
-            <div class="breed-card">
-                <img src="labrador.jpg" alt="Labrador Retriever">
-                <h3>Labrador Retriever</h3>
-                <p>Uma das raças mais populares do mundo, o labrador é conhecido por ser amigável, leal e inteligente</p>
-            </div>
-
-            <div class="breed-card">
-                <img src="golden.jpg" alt="Golden Retriever">
-                <h3>Golden Retriever</h3>
-                <p>Outro favorito popular, o golden retriever é um cachorro amigável e afetuoso que adora brincar.</p>
-            </div>
-
-            <div class="breed-card">
-                <img src="poodle.jpg" alt="Poodle">
-                <h3>Poodle</h3>
-                <p>Uma raça inteligente e brincalhona, o poodle vem em três tamanhos diferentes e é uma ótima opção para pessoas com alergias.</p>
-            </div>
-
-            <div class="breed-card">
-                <img src="bulldog.jpg" alt="Bulldog Inglês">
-                <h3>Bulldog Inglês</h3>
-                <p>Um cachorro amigável e leal, o bulldog inglês é uma raça tranquila e de baixa energia.</p>
-            </div>
-
-            <div class="breed-card">
-                <img src="pastor-alemao.jpg" alt="Pastor Alemão">
-                <h3>Pastor Alemão</h3>
-                <p>Uma raça inteligente e corajosa, o pastor alemão é frequentemente usado como cão policial ou de guarda</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="dicas">
         <h2>Cuidados básicos com o seu cachorro</h2>
         <ul>
-            <li>Alimentação: uma alimentação adequada é essencial para a saúde do seu cão. Dê a ele ração de qualidade e evite dar comida humana, que pode causar problemas de saúde.</li>
-            <li>Higiene: banhos regulares, escovação dos pelos e limpeza dos ouvidos são importantes para manter o seu cachorro limpo e saudável.</li>
-            <li>Vacinas e vermifugação: mantenha a carteira de vacinação do seu cachorro atualizada e faça a vermifugação regularmente para prevenir doenças.</li>
-            <li>Passeios e exercícios: os cachorros precisam de exercícios físicos diários para manter a saúde e a felicidade. Leve-o para passear e brincar regularmente.</li>
-            <li>Consultas ao veterinário: consulte regularmente um veterinário para garantir que seu cachorro esteja saudável e receba os cuidados necessários.</li>
+            <li><strong>Alimentação:</strong> uma alimentação adequada é essencial para a saúde do seu cão. Dê a ele ração de qualidade e evite dar comida humana, que pode causar problemas de saúde.</li>
+            <li><strong>Higiene:</strong> banhos regulares, escovação dos pelos e limpeza dos ouvidos são importantes para manter o seu cachorro limpo e saudável.</li>
+            <li><strong>Vacinas e vermifugação:</strong> mantenha a carteira de vacinação do seu cachorro atualizada e faça a vermifugação regularmente para prevenir doenças.</li>
+            <li><strong>Passeios e exercícios:</strong> os cachorros precisam de exercícios físicos diários para manter a saúde e a felicidade. Leve-o para passear e brincar regularmente.</li>
+            <li><strong>Consultas ao veterinário:</strong> consulte regularmente um veterinário para garantir que seu cachorro esteja saudável e receba os cuidados necessários.</li>
         </ul>
 
-        <h3>Dicas para treinamento de cachorro</h3>
+        <h3 id="racas">Raças de cachorro</h3>
+        <p>Existem muitas raças de cachorro, cada uma com suas características e personalidades únicas. Algumas das raças mais populares incluem:</p>
+
+        <section class="breeds-section">
+            <div class="breed-card" onclick="exibirInfoRaca('Labrador Retriever')">
+                <img src="./imagens/YellowLabradorLooking_new.jpg" alt="Foto de um Labrador Retriever">
+                <h4>Labrador Retriever</h4>
+                <p>Uma das raças mais populares do mundo, o labrador é conhecido por ser amigável, leal e inteligente.</p>
+            </div>
+            <div class="breed-card" onclick="exibirInfoRaca('Golden Retriever')">
+                <img src="./imagens/golden.webp" alt="Foto de um Golden Retriever">
+                <h4>Golden Retriever</h4>
+                <p>Outro favorito popular, o golden retriever é um cachorro amigável e afetuoso que adora brincar.</p>
+            </div>
+            <div class="breed-card" onclick="exibirInfoRaca('Poodle')">
+                <img src="./imagens/poodle.jpeg" alt="Foto de um Poodle">
+                <h4>Poodle</h4>
+                <p>Uma raça inteligente e brincalhona, o poodle vem em três tamanhos diferentes e é uma ótima opção para pessoas com alergias.</p>
+            </div>
+        </section>
+
+        <h3 id="dicas">Dicas para treinamento de cachorro</h3>
         <ol>
-            <li>Use reforço positivo: recompense seu cachorro quando ele fizer algo certo, em vez de puni-lo quando ele fizer algo errado.</li>
-            <li>Seja consistente: use os mesmos comandos e treinamentos todos os dias para que o seu cachorro entenda o que é esperado dele</li>
-            <li>Não desista: treinar um cachorro pode ser difícil, mas é importante ser persistente e continuar tentando</li>
-            <li>Envolva toda a família: todos devem participar do treinamento do cachorro para que ele entenda o que é esperado dele</li>
-            <li>Considere a ajuda de um profissional: se você estiver tendo dificuldades com o treinamento do seu cachorro, pode ser útil procurar a ajuda de um treinador profissional</li>
+            <li><strong>Use reforço positivo:</strong> recompense seu cachorro quando ele fizer algo certo, em vez de puni-lo quando ele fizer algo errado.</li>
+            <li><strong>Seja consistente:</strong> use os mesmos comandos e treinamentos todos os dias para que o seu cachorro entenda o que é esperado dele.</li>
+            <li><strong>Não desista:</strong> treinar um cachorro pode ser difícil, mas é importante ser persistente e continuar tentando.</li>
+            <li><strong>Envolva toda a família:</strong> todos devem participar do treinamento do cachorro para que ele entenda o que é esperado dele.</li>
+            <li><strong>Considere a ajuda de um profissional:</strong> se você estiver tendo dificuldades com o treinamento do seu cachorro, pode ser útil procurar a ajuda de um treinador profissional.</li>
         </ol>
-    </section>
 
-    <section id="contatos">
-        <h2>Entre em Contato</h2>
-        <form action="enviaemail.php" method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+        <h3 id="galeria">Galeria de Imagens de Cães</h3>
+        <p>Confira nossa galeria com fotos de cães incríveis!</p>
+        <div id="galeria-caes" class="gallery-grid"></div>
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
+        <h3 id="pesquisa">Pesquisa de Raças de Cães</h3>
+        <p>Use os filtros abaixo para encontrar a raça de cão ideal para você.</p>
+        <div class="form-container">
+            <label for="tamanho-raca">Tamanho:</label>
+            <select id="tamanho-raca">
+                <option value="todos">Todos</option>
+                <option value="Pequeno">Pequeno</option>
+                <option value="Médio">Médio</option>
+                <option value="Grande">Grande</option>
+            </select>
 
-            <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" name="mensagem" required></textarea>
+            <label for="temperamento-raca">Temperamento:</label>
+            <select id="temperamento-raca">
+                <option value="todos">Todos</option>
+                <option value="Amigável">Amigável</option>
+                <option value="Inteligente">Inteligente</option>
+                <option value="Calmo">Calmo</option>
+            </select>
+            <button onclick="pesquisarRacas()">Pesquisar</button>
+            <div id="resultados-pesquisa"></div>
+        </div>
 
-            <button type="submit">Enviar Agora</button>
+        <h3 id="conversor">Conversor de Medidas de Alimentos</h3>
+        <p>Converta medidas de volume para medidas de peso para o seu cão.</p>
+        <div class="form-container">
+            <label for="valor-medida">Valor:</label>
+            <input type="number" id="valor-medida" value="1">
+            <label for="unidade-origem">Converter de:</label>
+            <select id="unidade-origem">
+                <option value="xicara">Xícara (240ml)</option>
+                <option value="colher_sopa">Colher de Sopa (15ml)</option>
+            </select>
+            <label for="unidade-destino">Para:</label>
+            <select id="unidade-destino">
+                <option value="gramas">Gramas</option>
+                <option value="quilogramas">Quilogramas</option>
+            </select>
+            <button onclick="converterMedidas()">Converter</button>
+            <div id="resultado-conversao"></div>
+        </div>
+
+        <h3 id="contato">Entre em contato</h3>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Formulário de Contato</legend>
+                <label for="nome">Nome:</label><br>
+                <input type="text" id="nome" name="nome" required><br><br>
+    
+                <label for="email">E-mail:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+    
+                <label for="mensagem">Mensagem:</label><br>
+                <textarea id="mensagem" name="mensagem" rows="4" cols="50" required></textarea><br><br>
+    
+                <input type="submit" value="Enviar">
+            </fieldset>
         </form>
-    </section>
-
-    <footer>
-        <p>Desenvolvido por: Jessica Bueno ❤️ </p>
-    </footer>
-</body>
+    </main>
+    
+    <script src="./script.js"></script>
+     </body>
 </html>
+
+    
+    
+
+    <footer class="footer">
+        Desenvolvido por: Jessica Bueno
+    </footer>
+
+   
