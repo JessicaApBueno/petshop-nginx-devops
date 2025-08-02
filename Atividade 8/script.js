@@ -1,101 +1,111 @@
- // Dados para a galeria de imagens
+ 
         const imagensCaes = [
-            'https://images.unsplash.com/photo-1543852786-1cf6624b9987',
-            'https://images.unsplash.com/photo-1588942203135-2415714397a6',
-            'https://images.unsplash.com/photo-1547463777-a82f3a479426',
-            'https://images.unsplash.com/photo-1563721389028-100222a7f34f',
-            'https://images.unsplash.com/photo-1594950454371-d60211a76c0e',
-            'https://images.unsplash.com/photo-1582239075775-8022b7d27e28'
+            './imagens/Bobtail.webp',
+            './imagens/Braco%20Hungaro.webp',
+            './imagens/Cairn%20Terrier.webp',
+            './imagens/akita%20japon%C3%AAs.webp',
+            './imagens/beagle.webp',
+            './imagens/bearded%20collie.webp',
+               
         ];
 
-        // Dados para as informações detalhadas das raças
-        const dadosDasRacas = {
-            'Labrador Retriever': {
-                historia: 'O Labrador Retriever é originário da Terra Nova e era originalmente usado para auxiliar pescadores. Hoje, é uma das raças mais populares do mundo por seu temperamento amigável e inteligência.',
-                caracteristicas: 'Amigável, leal, inteligente, paciente e brincalhão. Ideal para famílias.',
-                imagem: 'https://images.unsplash.com/photo-1582239075775-8022b7d27e28'
-            },
-            'Golden Retriever': {
-                historia: 'O Golden Retriever foi desenvolvido na Escócia, no século XIX, para caça de aves aquáticas. É famoso por sua pelagem dourada e sua natureza gentil.',
-                caracteristicas: 'Amigável, afetuoso, inteligente e paciente. Adora brincar e nadar.',
-                imagem: 'https://images.unsplash.com/photo-1594950454371-d60211a76c0e'
-            },
-            'Poodle': {
-                historia: 'Apesar de ser a raça nacional da França, o Poodle se originou na Alemanha, onde era usado como cão d\'água. Sua inteligência e facilidade de treinamento o tornaram muito popular.',
-                caracteristicas: 'Muito inteligente, brincalhão e adaptável. Ideal para pessoas com alergias, pois solta pouco pelo.',
-                imagem: 'https://images.unsplash.com/photo-1601004318047-9ce48e24c4e7'
-            }
-        };
-
-        // Dados para a pesquisa de raças
         const todasAsRacas = [
-            { nome: 'Labrador Retriever', tamanho: 'Grande', temperamento: 'Amigável', nivelAtividade: 'Alto' },
-            { nome: 'Golden Retriever', tamanho: 'Grande', temperamento: 'Amigável', nivelAtividade: 'Alto' },
-            { nome: 'Poodle', tamanho: 'Médio', temperamento: 'Inteligente', nivelAtividade: 'Médio' },
-            { nome: 'Bulldog Inglês', tamanho: 'Médio', temperamento: 'Calmo', nivelAtividade: 'Baixo' },
-            { nome: 'Pastor Alemão', tamanho: 'Grande', temperamento: 'Inteligente', nivelAtividade: 'Alto' },
-            { nome: 'Chihuahua', tamanho: 'Pequeno', temperamento: 'Inteligente', nivelAtividade: 'Baixo' },
-            { nome: 'Pug', tamanho: 'Pequeno', temperamento: 'Calmo', nivelAtividade: 'Baixo' },
-            { nome: 'Beagle', tamanho: 'Médio', temperamento: 'Amigável', nivelAtividade: 'Alto' }
+            { nome: 'Golden Retriever', tamanho: 'Médio-Grande', temperamento: 'Amigável, Inteligente, Gentil', nivelAtividade: 'Alta', historia: 'Originário da Escócia, o Golden Retriever foi desenvolvido para caçar aves aquáticas. É um cão de família popular, conhecido por sua natureza amigável e temperamento dócil.', caracteristicas: 'Pelo longo dourado, porte elegante, natureza paciente e amorosa.' },
+            { nome: 'Labrador Retriever', tamanho: 'Médio-Grande', temperamento: 'Extrovertido, Amigável, Ativo', nivelAtividade: 'Alta', historia: 'Apesar do nome, a raça se originou em Newfoundland, Canadá. Foi usado por pescadores para ajudar a puxar redes. É um cão de família popular devido à sua inteligência e natureza brincalhona.', caracteristicas: 'Pelo curto e denso, cores preta, amarela ou chocolate, comportamento extrovertido e leal.' },
+            { nome: 'Poodle', tamanho: 'Pequeno', temperamento: 'Inteligente, Orgulhoso, Ativo', nivelAtividade: 'Média', historia: 'O Poodle se originou na Alemanha como um cão de caça à água. É conhecido por sua inteligência e facilidade de treinamento. Vem em três tamanhos: Toy, Miniatura e Standard.', caracteristicas: 'Pelo encaracolado, quase hipoalergênico, muito inteligente e fácil de adestrar.' },
+            { nome: 'Bulldog Francês', tamanho: 'Pequeno', temperamento: 'Afetuoso, Alerta, Paciente', nivelAtividade: 'Baixa', historia: 'Criado na França no século XIX, era o companheiro de rendeiros de renda. A raça se tornou popular entre artistas e a elite parisiense. É um cão de companhia ideal.', caracteristicas: 'Orelhas de morcego, corpo compacto, expressão facial amigável.' },
+            { nome: 'Pastor Alemão', tamanho: 'Grande', temperamento: 'Corajoso, Inteligente, Fiel', nivelAtividade: 'Alta', historia: 'Originário da Alemanha no final do século XIX, foi criado para pastorear ovelhas. Atualmente é um cão de serviço muito usado pela polícia e forças armadas devido à sua inteligência e lealdade.', caracteristicas: 'Corpo atlético, porte imponente, alta capacidade de trabalho e proteção.' },
+            { nome: 'Beagle', tamanho: 'Pequeno-Médio', temperamento: 'Amigável, Curioso, Determinado', nivelAtividade: 'Média', historia: 'Uma raça de caça, o Beagle é conhecido por seu olfato apurado. É um cão de companhia alegre e tolerante, que se dá bem com crianças.', caracteristicas: 'Orelhas longas e caídas, latido característico, natureza brincalhona.' },
+            { nome: 'Dachshund', tamanho: 'Pequeno', temperamento: 'Teimoso, Brincalhão, Inteligente', nivelAtividade: 'Baixa', historia: 'Originário da Alemanha, o Dachshund foi criado para caçar texugos e outros animais que vivem em tocas. Sua forma alongada é ideal para essa tarefa. É um cão corajoso e teimoso.', caracteristicas: 'Corpo longo e baixo, temperamento ousado, brincalhão e enérgico.' },
+            { nome: 'Shih Tzu', tamanho: 'Pequeno', temperamento: 'Amigável, Companheiro, Calmo', nivelAtividade: 'Baixa', historia: 'Uma raça de cão palaciano da China, o Shih Tzu era o cão de companhia de imperadores. É um cão de colo por excelência, conhecido por sua natureza afetuosa e calma.', caracteristicas: 'Pelo longo e luxuoso, rosto de crisântemo, personalidade adorável.' },
+            { nome: 'Rottweiler', tamanho: 'Grande', temperamento: 'Corajoso, Confiante, Calmo', nivelAtividade: 'Média', historia: 'Originário da Alemanha, o Rottweiler foi um cão de gado e cão de guarda. É conhecido por sua força e instinto protetor. Requer treinamento e socialização consistentes.', caracteristicas: 'Forte e musculoso, pelagem preta com marcações castanhas, leal e confiante.' }
         ];
 
-        // Função para exibir a galeria de imagens
         function exibirGaleriaDeImagens(imagens) {
-            const galeriaContainer = document.getElementById('galeria-caes');
-            galeriaContainer.innerHTML = ''; // Limpa o conteúdo anterior
+        const galeriaContainer = document.getElementById('galeria-caes');
+        if (!galeriaContainer) return;
+        galeriaContainer.innerHTML = '';
 
-            imagens.forEach(url => {
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Imagem de um cão';
-                img.classList.add('gallery-image');
-                galeriaContainer.appendChild(img);
+        imagens.forEach(url => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Imagem de um cão';
+        img.classList.add('gallery-image');
+        galeriaContainer.appendChild(img);
             });
         }
+        exibirGaleriaDeImagens(imagensCaes);
+       
 
-        // Função para exibir informações detalhadas de uma raça
+        
         function exibirInfoRaca(nomeRaca) {
-            const raca = dadosDasRacas[nomeRaca];
-            if (raca) {
-                alert(`Raça: ${nomeRaca}\n\nHistória: ${raca.historia}\n\nCaracterísticas: ${raca.caracteristicas}`);
+            const raca = todasAsRacas.find(r => r.nome === nomeRaca);
+            const infoBox = document.getElementById('raca-info-box');
+            if (raca && infoBox) {
+                infoBox.innerHTML = `
+                    <h4>${raca.nome}</h4>
+                    <p><strong>História:</strong> ${raca.historia}</p>
+                    <p><strong>Características:</strong> ${raca.caracteristicas}</p>
+                `;
+                infoBox.style.display = 'block';
             }
         }
 
-        // Função para pesquisar raças com base nos filtros
+       
         function pesquisarRacas() {
             const tamanho = document.getElementById('tamanho-raca').value;
-            const temperamento = document.getElementById('temperamento-raca').value;
-
+            const temperamento = document.getElementById('temperamento-raca').value.toLowerCase().trim();
+            const atividade = document.getElementById('atividade-raca').value;
+            const resultadosContainer = document.getElementById('resultados-pesquisa');
+            
+       
             const resultados = todasAsRacas.filter(raca => {
-                return (tamanho === 'todos' || raca.tamanho === tamanho) &&
-                       (temperamento === 'todos' || raca.temperamento === temperamento);
+                const correspondeTamanho = !tamanho || raca.tamanho.includes(tamanho);
+                const correspondeAtividade = !atividade || raca.nivelAtividade.includes(atividade);
+                const correspondeTemperamento = !temperamento || raca.temperamento.toLowerCase().includes(temperamento);
+                
+                return correspondeTamanho && correspondeAtividade && correspondeTemperamento;
             });
 
-            const resultadosContainer = document.getElementById('resultados-pesquisa');
-            resultadosContainer.innerHTML = '';
+           
+            if (resultadosContainer) {
+                resultadosContainer.innerHTML = '';
+            }
+            
             if (resultados.length > 0) {
                 resultados.forEach(raca => {
-                    const p = document.createElement('p');
-                    p.innerText = `${raca.nome} - Tamanho: ${raca.tamanho}, Temperamento: ${raca.temperamento}`;
-                    resultadosContainer.appendChild(p);
+                    const card = document.createElement('div');
+                    card.classList.add('raca-card-resultado'); 
+                    card.innerHTML = `
+                        <h4>${raca.nome}</h4>
+                        <p><strong>Tamanho:</strong> ${raca.tamanho}</p>
+                        <p><strong>Temperamento:</strong> ${raca.temperamento}</p>
+                        <p><strong>Nível de Atividade:</strong> ${raca.nivelAtividade}</p>
+                    `;
+                    resultadosContainer.appendChild(card);
                 });
             } else {
-                resultadosContainer.innerText = 'Nenhuma raça encontrada com os critérios selecionados.';
+                resultadosContainer.innerHTML = '<p>Nenhuma raça encontrada com os critérios selecionados.</p>';
             }
         }
 
-        // Função para converter medidas
+       
         function converterMedidas() {
             const valor = parseFloat(document.getElementById('valor-medida').value);
             const unidadeOrigem = document.getElementById('unidade-origem').value;
             const unidadeDestino = document.getElementById('unidade-destino').value;
             let resultado;
 
-            // Fatores de conversão (exemplo: 1 xícara = 120 gramas)
             const fatores = {
                 'xicara': { 'gramas': 120, 'quilogramas': 0.120 },
                 'colher_sopa': { 'gramas': 15, 'quilogramas': 0.015 }
             };
+            
+            const resultadoConversaoElement = document.getElementById('resultado-conversao');
+            if (isNaN(valor)) {
+                resultadoConversaoElement.innerText = 'Por favor, insira um valor numérico válido.';
+                return;
+            }
 
             if (unidadeOrigem === unidadeDestino) {
                 resultado = valor;
@@ -105,11 +115,14 @@
                 resultado = 'Conversão não suportada.';
             }
 
-            document.getElementById('resultado-conversao').innerText = `Resultado: ${resultado.toFixed(2)} ${unidadeDestino}`;
+            if (typeof resultado === 'number') {
+                resultadoConversaoElement.innerText = `Resultado: ${resultado.toFixed(2)} ${unidadeDestino}`;
+            } else {
+                resultadoConversaoElement.innerText = resultado;
+            }
         }
-
-        // Chama a função para exibir a galeria assim que a página carrega
-        window.onload = function() {
+        
+        
+        document.addEventListener('DOMContentLoaded', function() {
             exibirGaleriaDeImagens(imagensCaes);
-        };
-    
+        });

@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuidados Pets</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles.css">
+     <link rel="icon" type="image/png" href="./imagens/logo.png" >
 </head>
 
+
 <body>
-     <header class="header">
+    
+<header class="header">
         <img src="./imagens/logo.png" alt="Logo do Blog">
     </header>
 
@@ -27,17 +30,8 @@
             <p>Bem-vindo ao nosso blog sobre cachorros de estimação! Neste espaço, você encontrará informações e dicas úteis sobre como cuidar do seu melhor amigo canino.</p>
         </section>
 
-        <h2>Cuidados básicos com o seu cachorro</h2>
-        <ul>
-            <li><strong>Alimentação:</strong> uma alimentação adequada é essencial para a saúde do seu cão. Dê a ele ração de qualidade e evite dar comida humana, que pode causar problemas de saúde.</li>
-            <li><strong>Higiene:</strong> banhos regulares, escovação dos pelos e limpeza dos ouvidos são importantes para manter o seu cachorro limpo e saudável.</li>
-            <li><strong>Vacinas e vermifugação:</strong> mantenha a carteira de vacinação do seu cachorro atualizada e faça a vermifugação regularmente para prevenir doenças.</li>
-            <li><strong>Passeios e exercícios:</strong> os cachorros precisam de exercícios físicos diários para manter a saúde e a felicidade. Leve-o para passear e brincar regularmente.</li>
-            <li><strong>Consultas ao veterinário:</strong> consulte regularmente um veterinário para garantir que seu cachorro esteja saudável e receba os cuidados necessários.</li>
-        </ul>
-
         <h3 id="racas">Raças de cachorro</h3>
-        <p>Existem muitas raças de cachorro, cada uma com suas características e personalidades únicas. Algumas das raças mais populares incluem:</p>
+        <p>Existem muitas raças de cachorro, cada uma com suas características e personalidades únicas. Clique nos cartões para ver mais informações.</p>
 
         <section class="breeds-section">
             <div class="breed-card" onclick="exibirInfoRaca('Labrador Retriever')">
@@ -56,45 +50,71 @@
                 <p>Uma raça inteligente e brincalhona, o poodle vem em três tamanhos diferentes e é uma ótima opção para pessoas com alergias.</p>
             </div>
         </section>
+        
 
-        <h3 id="dicas">Dicas para treinamento de cachorro</h3>
-        <ol>
-            <li><strong>Use reforço positivo:</strong> recompense seu cachorro quando ele fizer algo certo, em vez de puni-lo quando ele fizer algo errado.</li>
-            <li><strong>Seja consistente:</strong> use os mesmos comandos e treinamentos todos os dias para que o seu cachorro entenda o que é esperado dele.</li>
-            <li><strong>Não desista:</strong> treinar um cachorro pode ser difícil, mas é importante ser persistente e continuar tentando.</li>
-            <li><strong>Envolva toda a família:</strong> todos devem participar do treinamento do cachorro para que ele entenda o que é esperado dele.</li>
-            <li><strong>Considere a ajuda de um profissional:</strong> se você estiver tendo dificuldades com o treinamento do seu cachorro, pode ser útil procurar a ajuda de um treinador profissional.</li>
-        </ol>
+        <div id="raca-info-box"></div>
 
+        <details>
+            <summary>
+                <h3>Cuidados básicos com o seu cachorro</h3>
+            </summary>
+            <ul>
+                <li><strong>Alimentação:</strong> uma alimentação adequada é essencial para a saúde do seu cão. Dê a ele ração de qualidade e evite dar comida humana, que pode causar problemas de saúde.</li>
+                <li><strong>Higiene:</strong> banhos regulares, escovação dos pelos e limpeza dos ouvidos são importantes para manter o seu cachorro limpo e saudável.</li>
+                <li><strong>Vacinas e vermifugação:</strong> mantenha a carteira de vacinação do seu cachorro atualizada e faça a vermifugação regularmente para prevenir doenças.</li>
+                <li><strong>Passeios e exercícios:</strong> os cachorros precisam de exercícios físicos diários para manter a saúde e a felicidade. Leve-o para passear e brincar regularmente.</li>
+                <li><strong>Consultas ao veterinário:</strong> consulte regularmente um veterinário para garantir que seu cachorro esteja saudável e receba os cuidados necessários.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <h3 id="dicas">Dicas para treinamento de cachorro</h3>
+            </summary>
+            <ol>
+                <li><strong>Use reforço positivo:</strong> recompense seu cachorro quando ele fizer algo certo, em vez de puni-lo quando ele fizer algo errado.</li>
+                <li><strong>Seja consistente:</strong> use os mesmos comandos e treinamentos todos os dias para que o seu cachorro entenda o que é esperado dele.</li>
+                <li><strong>Não desista:</strong> treinar um cachorro pode ser difícil, mas é importante ser persistente e continuar tentando.</li>
+                <li><strong>Envolva toda a família:</strong> todos devem participar do treinamento do cachorro para que ele entenda o que é esperado dele.</li>
+                <li><strong>Considere a ajuda de um profissional:</strong> se você estiver tendo dificuldades com o treinamento do seu cachorro, pode ser útil procurar a ajuda de um treinador profissional.</li>
+            </ol>
+        </details>
+
+        <hr><br>
         <h3 id="galeria">Galeria de Imagens de Cães</h3>
         <p>Confira nossa galeria com fotos de cães incríveis!</p>
         <div id="galeria-caes" class="gallery-grid"></div>
-
+        <hr><br><br>
         <h3 id="pesquisa">Pesquisa de Raças de Cães</h3>
         <p>Use os filtros abaixo para encontrar a raça de cão ideal para você.</p>
-        <div class="form-container">
+        <div class="form-container inline-form">
             <label for="tamanho-raca">Tamanho:</label>
             <select id="tamanho-raca">
-                <option value="todos">Todos</option>
-                <option value="Pequeno">Pequeno</option>
+                <option value="">Todos</option>
+                <option value="Pequeno">Pequeno</option>    
                 <option value="Médio">Médio</option>
                 <option value="Grande">Grande</option>
             </select>
 
-            <label for="temperamento-raca">Temperamento:</label>
-            <select id="temperamento-raca">
-                <option value="todos">Todos</option>
-                <option value="Amigável">Amigável</option>
-                <option value="Inteligente">Inteligente</option>
-                <option value="Calmo">Calmo</option>
-            </select>
-            <button onclick="pesquisarRacas()">Pesquisar</button>
-            <div id="resultados-pesquisa"></div>
-        </div>
+            <label for="temperamento-raca">Temperamento (palavra-chave):</label>
+            <input type="text" id="temperamento-raca" placeholder="Ex: Amigável">
 
+            <label for="atividade-raca">Nível de Atividade:</label>
+            <select id="atividade-raca">
+                <option value="">Todos</option>
+                <option value="Baixa">Baixa</option>
+                <option value="Média">Média</option>
+                <option value="Alta">Alta</option>
+            </select>
+
+            <button onclick="pesquisarRacas()">Pesquisar</button>
+        </div>
+        <div id="resultados-pesquisa"></div>
+        
+         <hr><br><br>
         <h3 id="conversor">Conversor de Medidas de Alimentos</h3>
         <p>Converta medidas de volume para medidas de peso para o seu cão.</p>
-        <div class="form-container">
+        <div class="form-container inline-form">
             <label for="valor-medida">Valor:</label>
             <input type="number" id="valor-medida" value="1">
             <label for="unidade-origem">Converter de:</label>
@@ -108,36 +128,33 @@
                 <option value="quilogramas">Quilogramas</option>
             </select>
             <button onclick="converterMedidas()">Converter</button>
-            <div id="resultado-conversao"></div>
         </div>
+        <div id="resultado-conversao"></div>
 
         <h3 id="contato">Entre em contato</h3>
         <form action="#" method="post">
-            <fieldset>
-                <legend>Formulário de Contato</legend>
-                <label for="nome">Nome:</label><br>
-                <input type="text" id="nome" name="nome" required><br><br>
-    
-                <label for="email">E-mail:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
-    
-                <label for="mensagem">Mensagem:</label><br>
-                <textarea id="mensagem" name="mensagem" rows="4" cols="50" required></textarea><br><br>
-    
-                <input type="submit" value="Enviar">
-            </fieldset>
+            <div class="form-container">
+                <label class="nome" for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label class="email" for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label class="mensagem" for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" rows="4" cols="50" required></textarea>
+
+                <button class="submit-button" type="submit">Enviar</button>
+            </div>
         </form>
     </main>
-    
     <script src="./script.js"></script>
-     </body>
-</html>
-
-    
-    
-
-    <footer class="footer">
-        Desenvolvido por: Jessica Bueno
+</body>
+ <footer>
+        <div class="footer">
+            Desenvolvido por: Jessica Bueno
+        </div>
     </footer>
+    
+</html>
 
    
