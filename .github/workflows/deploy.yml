@@ -1,0 +1,65 @@
+name: CI - Build e Push para Docker Hub
+
+
+
+on:
+
+  push:
+
+    branches:
+
+      - main # Roda em cada push na branch principal
+
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    
+
+    steps:
+
+    - name: Checkout do Código
+
+      uses: actions/checkout@v3
+
+
+
+    # --- Etapa 1: Login no Docker Hub ---
+
+    - name: Login no Docker Hub
+
+      uses: docker/login-action@v3
+
+      with:
+
+        username: ${{ secrets.buenojessicaaparecida@gmail.com }} 
+
+        password: ${{ secrets.Adicts@77 }}
+
+        
+
+    # --- Etapa 2: Build, Tag e Push da Imagem ---
+
+    - name: Build, Tag e Push da Imagem NGINX Estática
+
+      uses: docker/build-push-action@v5
+
+      with:
+
+        context: .
+
+        push: true
+
+        
+
+        tags: jessicaapbueno/petshop-static-nginx:latest 
+
+        
+
+    - name: Confirmação de Sucesso
+
+      run: echo "Imagem Docker pronta e publicada no Docker Hub!"
