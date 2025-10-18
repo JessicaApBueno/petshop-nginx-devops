@@ -50,14 +50,23 @@ jobs:
         # Instala o módulo Python necessário para o Ansible interagir com o Docker
         pip install docker
 
+    # --- NOVO PASSO: Cria arquivo de configuração SSH para DESABILITAR verificação de host key ---
+    - name: 2.1. Criar Configuração SSH Temporária
+      run: |
+        echo "Host *" > ssh.cfg
+        echo "  StrictHostKeyChecking no" >> ssh.cfg
+        echo "  UserKnownHostsFile /dev/null" >> ssh.cfg
+
     - name: 3. Executar o Playbook Ansible (Deploy)
       run: |
         echo "Preparando inventário com IP: ${{ secrets.VM_IP_ADDRESS }}"
         # Substitui o placeholder '{{ vm_ip }}' no inventory.ini com o IP real da VM
         sed -i "s/{{ vm_ip }}/${{ secrets.VM_IP_ADDRESS }}/g" inventory.ini
         
-        # Roda o Playbook deploy-cd.yml, passando as variáveis de credencial e imagem
+        # Roda o Playbook, passando as variáveis
+        # O argumento '-e "ansible_ssh_common_args='-F ssh.cfg'" ' força o Ansible a usar o arquivo de configuração SSH sem verificação
         ansible-playbook -i inventory.ini deploy-cd.yml \
+          -e "ansible_ssh_common_args='-F ssh.cfg'" \
           -e "image_name=${{ env.IMAGE_REPO }}" \
           -e "docker_hub_pat=${{ secrets.DOCKER_PASSWORD }}" \
           -e "docker_hub_user=${{ secrets.DOCKER_USERNAME }}"
