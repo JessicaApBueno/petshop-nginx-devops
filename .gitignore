@@ -1,0 +1,20 @@
+CHAVE PRIVADA SSH DE DEPLOY
+
+github_deploy_key
+
+Credenciais sensíveis (JAMAIS ENVIAR!)
+
+gcp_key.json
+*.tfvars
+
+Arquivos gerados pelo Terraform (Estado Local)
+
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+
+Arquivos de log e ambientes
+
+*.log
+!README.md
