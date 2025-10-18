@@ -18,7 +18,7 @@ data "google_compute_image" "ubuntu_lts" {
 # --- RECURSO 1: Regra de Firewall para HTTP (Porta 80) ---
 resource "google_compute_firewall" "http_firewall" {
   name    = "allow-http-nginx-petshop"
-  network = "default" # Usa a rede VPC padrão
+  network = "default" 
 
   allow {
     protocol = "tcp"
@@ -27,6 +27,20 @@ resource "google_compute_firewall" "http_firewall" {
 
   source_ranges = ["0.0.0.0/0"] 
   target_tags = ["http-server"]
+}
+
+# --- RECURSO 2: Regra de Firewall para SSH (Porta 22) ---
+resource "google_compute_firewall" "ssh_firewall" {
+  name    = "allow-ssh-petshop"
+  network = "default" 
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"] # Permite o tráfego SSH
+  }
+
+  source_ranges = ["0.0.0.0/0"] # Permite acesso de qualquer IP para SSH
+  target_tags = ["http-server"] # Aplica a regra na sua VM
 }
 
 # --- RECURSO 2: Máquina Virtual (VM) e2-micro (Always Free Tier) ---
