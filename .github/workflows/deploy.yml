@@ -1,4 +1,11 @@
-pull_request_target:
+# Nome do Workflow
+name: CI/CD - Deploy com Ansible na VM do GCP
+
+on:
+  push:
+    branches:
+      - main
+  pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
       - main
@@ -23,24 +30,22 @@ jobs:
         with:
           project_id: 'storied-radius-470316-f6'
 
-      # ETAPA FINAL: INSTALAR E EXECUTAR DENTRO DE UM AMBIENTE ISOLADO E CONTROLADO
-      # Esta etapa cria um ambiente virtual para garantir que o Ansible e suas
-      # dependências estejam sempre juntos e sejam encontrados corretamente.
+      # ETAPA FINAL: Instalar e Executar dentro de um ambiente isolado
       - name: Instalar dependências e Executar o Playbook Ansible
         run: |
-          # 1. Criar um ambiente virtual Python limpo
+          # Criar um ambiente virtual Python limpo
           python3 -m venv ansible_venv
 
-          # 2. Ativar o ambiente virtual
+          # Ativar o ambiente virtual
           source ansible_venv/bin/activate
 
-          # 3. Instalar o Ansible e TODAS as dependências do GCP dentro deste ambiente
+          # Instalar o Ansible e TODAS as dependências do GCP dentro deste ambiente
           pip install --upgrade pip
           pip install ansible requests google-api-python-client google-auth-httplib2
 
-          # 4. Instalar a coleção do Ansible para GCP
+          # Instalar a coleção do Ansible para GCP
           ansible-galaxy collection install google.cloud
 
-          # 5. Executar o playbook DE DENTRO do ambiente ativado
+          # Executar o playbook DE DENTRO do ambiente ativado
           echo "INFO: Ambiente pronto. Executando o playbook..."
           ansible-playbook -i inventory.ini deploy-cd.yml
