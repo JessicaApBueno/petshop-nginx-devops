@@ -29,7 +29,7 @@ O fluxo de trabalho (`.github/workflows/deploy-cd.yml`) implementa um pipeline d
 Os princípios de IaC tratam a definição da infraestrutura e dos processos com o mesmo rigor do código da aplicação: eles são versionados, testáveis e reproduzíveis.
 
 * **Como foi aplicado:**
-    * **`Dockerfile`:** Este arquivo é a "receita" da infraestrutura da nossa aplicação. Ele define o sistema operacional, o servidor Nginx, e como a aplicação deve ser montada. Qualquer pessoa com Docker pode recriar um ambiente idêntico e funcional em segundos.
+    * **`Dockerfile`:** Este arquivo é a "receita" da infraestrutura desta aplicação. Ele define o sistema operacional, o servidor Nginx, e como a aplicação deve ser montada. Qualquer pessoa com Docker pode recriar um ambiente idêntico e funcional em segundos.
     * **`.github/workflows/deploy-cd.yml`:** Este arquivo define o nosso pipeline de automação como código. O processo de deploy não é mais um manual secreto, mas sim um arquivo versionado no Git, transparente para toda a equipe.
 
 ### 🤝 4. Colaboração e Transparência
@@ -37,6 +37,8 @@ Os princípios de IaC tratam a definição da infraestrutura e dos processos com
 DevOps é, acima de tudo, sobre quebrar silos. O pipeline automatizado serve como uma fonte única de verdade.
 
 * **Como foi aplicado:** Qualquer pessoa com acesso ao repositório no GitHub pode ir na aba "Actions" e ver o histórico completo de builds, os logs de cada etapa e o status atual da aplicação. Se um build falhar, a notificação é imediata e transparente, permitindo uma correção rápida. Acabou o "mas na minha máquina funciona".
+  
+<img width="1331" height="640" alt="git actions" src="https://github.com/user-attachments/assets/423dca43-2b90-4f39-ab32-c497abdc3838" />
 
 ---
 
