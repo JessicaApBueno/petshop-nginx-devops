@@ -40,12 +40,12 @@ jobs:
 
       # ETAPA 4: INSTALAÇÃO DO ANSIBLE E DEPENDÊNCIAS DO GCP (CORRIGIDO)
       # Instala as bibliotecas Python E a coleção de plugins do Ansible para GCP
-      - name: Instalar Ansible e a coleção GCP
+      - name: Instalar Ansible e todas as dependências do GCP
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip
           pip3 install --upgrade pip
-          pip3 install ansible google-auth requests
+          pip3 install ansible requests google-api-python-client google-auth-httplib2
           ansible-galaxy collection install google.cloud
 
       # ETAPA 5: EXECUÇÃO DO PLAYBOOK
