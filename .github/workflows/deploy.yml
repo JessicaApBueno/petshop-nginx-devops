@@ -20,12 +20,11 @@ jobs:
 
     steps:
       # ETAPA 1: FAZER O CHECKOUT DO CÓDIGO
-      # Importante: Com 'pull_request_target', fazemos o checkout do código da branch base (main)
-      # que é seguro e contém a versão confiável do workflow.
       - name: Checkout do código do repositório
         uses: actions/checkout@v4
 
       # ETAPA 2: AUTENTICAÇÃO COM O GOOGLE CLOUD
+      # Esta etapa agora funcionará por causa do gatilho 'pull_request_target'
       - name: Autenticação com Google Cloud
         id: auth
         uses: 'google-github-actions/auth@v2'
@@ -33,12 +32,14 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       # ETAPA 3: CONFIGURAÇÃO DO SDK DO GCLOUD
+      # Prepara o ambiente para que o Ansible possa usar as credenciais
       - name: Configuração do gcloud CLI
         uses: 'google-github-actions/setup-gcloud@v2'
         with:
           project_id: 'storied-radius-470316-f6'
 
-      # ETAPA 4: INSTALAÇÃO DO ANSIBLE E DA COLEÇÃO GCP
+      # ETAPA 4: INSTALAÇÃO DO ANSIBLE E DEPENDÊNCIAS DO GCP (CORRIGIDO)
+      # Instala as bibliotecas Python E a coleção de plugins do Ansible para GCP
       - name: Instalar Ansible e a coleção GCP
         run: |
           sudo apt-get update
@@ -48,7 +49,7 @@ jobs:
           ansible-galaxy collection install google.cloud
 
       # ETAPA 5: EXECUÇÃO DO PLAYBOOK
+      # Esta etapa agora encontrará o plugin 'gcp_compute'
       - name: Executar o Playbook Ansible
         run: |
-          # !! IMPORTANTE: Altere 'playbook.yml' se o seu arquivo tiver outro nome !!
           ansible-playbook -i inventory.ini deploy-cd.yml
