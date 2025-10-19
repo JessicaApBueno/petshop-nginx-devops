@@ -30,22 +30,22 @@ jobs:
         with:
           project_id: 'storied-radius-470316-f6'
 
-      # ETAPA FINAL: Instalar e Executar dentro de um ambiente isolado
+      # ETAPA FINAL E CORRIGIDA: Instalar e executar em um ambiente controlado e explícito
       - name: Instalar dependências e Executar o Playbook Ansible
         run: |
-          # Criar um ambiente virtual Python limpo
-          python3 -m venv ansible_venv
-
-          # Ativar o ambiente virtual
-          source ansible_venv/bin/activate
-
-          # Instalar o Ansible e TODAS as dependências do GCP dentro deste ambiente
+          # Instalar as bibliotecas Python necessárias
           pip install --upgrade pip
           pip install ansible requests google-api-python-client google-auth-httplib2
 
-          # Instalar a coleção do Ansible para GCP
-          ansible-galaxy collection install google.cloud
+          # Criar uma pasta local para as coleções do Ansible
+          mkdir -p ./collections
 
-          # Executar o playbook DE DENTRO do ambiente ativado
+          # Exportar uma variável de ambiente para FORÇAR o Ansible a olhar nesta pasta
+          export ANSIBLE_COLLECTIONS_PATHS=./collections
+
+          # Instalar a coleção do Google Cloud DENTRO desta pasta específica
+          ansible-galaxy collection install google.cloud -p ./collections
+
+          # Executar o playbook. Agora o Ansible saberá exatamente onde encontrar o plugin gcp_compute.
           echo "INFO: Ambiente pronto. Executando o playbook..."
           ansible-playbook -i inventory.ini deploy-cd.yml
