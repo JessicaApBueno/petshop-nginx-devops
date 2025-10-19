@@ -1,14 +1,4 @@
-# Nome do Workflow
-name: CI/CD - Deploy com Ansible na VM do GCP
-
-# Gatilho (CORRIGIDO): Executar em push para a 'main' OU quando um PR for aberto para a 'main'
-on:
-  # Gatilho para quando o código for merged na branch principal
-  push:
-    branches:
-      - main
-  # Gatilho SEGURO para Pull Requests, que tem acesso aos secrets
-  pull_request_target:
+pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
       - main
@@ -19,37 +9,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ETAPA 1: FAZER O CHECKOUT DO CÓDIGO
       - name: Checkout do código do repositório
         uses: actions/checkout@v4
 
-      # ETAPA 2: AUTENTICAÇÃO COM O GOOGLE CLOUD
-      # Esta etapa agora funcionará por causa do gatilho 'pull_request_target'
       - name: Autenticação com Google Cloud
         id: auth
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      # ETAPA 3: CONFIGURAÇÃO DO SDK DO GCLOUD
-      # Prepara o ambiente para que o Ansible possa usar as credenciais
       - name: Configuração do gcloud CLI
         uses: 'google-github-actions/setup-gcloud@v2'
         with:
           project_id: 'storied-radius-470316-f6'
 
-      # ETAPA 4: INSTALAÇÃO DO ANSIBLE E DEPENDÊNCIAS DO GCP (CORRIGIDO)
-      # Instala as bibliotecas Python E a coleção de plugins do Ansible para GCP
-      - name: Instalar Ansible e todas as dependências do GCP
+      # ETAPA FINAL: INSTALAR E EXECUTAR DENTRO DE UM AMBIENTE ISOLADO E CONTROLADO
+      # Esta etapa cria um ambiente virtual para garantir que o Ansible e suas
+      # dependências estejam sempre juntos e sejam encontrados corretamente.
+      - name: Instalar dependências e Executar o Playbook Ansible
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip3 install --upgrade pip
-          pip3 install ansible requests google-api-python-client google-auth-httplib2
+          # 1. Criar um ambiente virtual Python limpo
+          python3 -m venv ansible_venv
+
+          # 2. Ativar o ambiente virtual
+          source ansible_venv/bin/activate
+
+          # 3. Instalar o Ansible e TODAS as dependências do GCP dentro deste ambiente
+          pip install --upgrade pip
+          pip install ansible requests google-api-python-client google-auth-httplib2
+
+          # 4. Instalar a coleção do Ansible para GCP
           ansible-galaxy collection install google.cloud
 
-      # ETAPA 5: EXECUÇÃO DO PLAYBOOK
-      # Esta etapa agora encontrará o plugin 'gcp_compute'
-      - name: Executar o Playbook Ansible
-        run: |
+          # 5. Executar o playbook DE DENTRO do ambiente ativado
+          echo "INFO: Ambiente pronto. Executando o playbook..."
           ansible-playbook -i inventory.ini deploy-cd.yml
