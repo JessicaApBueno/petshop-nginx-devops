@@ -1,4 +1,4 @@
-name: CI/CD - Build, Push e Deploy (Ansible)
+name: CI/CD - Build, Push e Deploy (GCP Identity)
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     
-    # Define variáveis de ambiente globais para o job
+    # Define variáveis de ambiente globais
     env:
       IMAGE_REPO: ${{ secrets.DOCKER_USERNAME }}/petshop-static-nginx:latest
       
@@ -34,39 +34,34 @@ jobs:
         tags: ${{ env.IMAGE_REPO }}
         
     # ------------------------------------------------------------------
-    # --- FASE CD (Deploy via Ansible) ---
+    # --- FASE CD (Deploy via Ansible e GCP Identity) ---
     # ------------------------------------------------------------------
 
-    - name: 1. Configurar Conexão SSH para Ansible
-      # Este passo usa a chave privada armazenada na Secret
-      uses: webfactory/ssh-agent@v0.9.0
+    - name: 1. Configurar Credenciais GCP (Para autenticar o Ansible)
+      # Usa o arquivo JSON da conta de serviço para autenticar o Action no GCP
+      uses: google-github-actions/auth@v1
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        
-    - name: 2. Instalar Ansible e Módulo Docker
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: 2. Instalar gcloud, Ansible e Módulo Docker
       run: |
+        # Instala ferramentas necessárias no runner
         sudo apt-get update
-        sudo apt-get install -y ansible
-        # Instala o módulo Python necessário para o Ansible interagir com o Docker
-        pip install docker
-
-    # --- NOVO PASSO: Cria arquivo de configuração SSH para DESABILITAR verificação de host key ---
-    - name: 2.1. Criar Configuração SSH Temporária
-      run: |
-        echo "Host *" > ssh.cfg
-        echo "  StrictHostKeyChecking no" >> ssh.cfg
-        echo "  UserKnownHostsFile /dev/null" >> ssh.cfg
-
-    - name: 3. Executar o Playbook Ansible (Deploy)
+        sudo apt-get install -y ansible google-cloud-sdk python3-pip
+        pip install docker apache-libcloud
+        
+    - name: 3. Executar o Playbook Ansible (Deploy Final)
+      # Aqui, o Ansible usa o gcloud como proxy para conectar-se à VM
       run: |
         echo "Preparando inventário com IP: ${{ secrets.VM_IP_ADDRESS }}"
-        # Substitui o placeholder '{{ vm_ip }}' no inventory.ini com o IP real da VM
+        # 1. Substitui o placeholder '{{ vm_ip }}' no inventário com o IP real da Secret
         sed -i "s/{{ vm_ip }}/${{ secrets.VM_IP_ADDRESS }}/g" inventory.ini
         
-        # Roda o Playbook, passando as variáveis
-        # O argumento '-e "ansible_ssh_common_args='-F ssh.cfg'" ' força o Ansible a usar o arquivo de configuração SSH sem verificação
+        # 2. Roda o Playbook, usando gcloud como ProxyCommand para autenticação (Sem chave SSH)
         ansible-playbook -i inventory.ini deploy-cd.yml \
-          -e "ansible_ssh_common_args='-F ssh.cfg'" \
           -e "image_name=${{ env.IMAGE_REPO }}" \
           -e "docker_hub_pat=${{ secrets.DOCKER_PASSWORD }}" \
-          -e "docker_hub_user=${{ secrets.DOCKER_USERNAME }}"
+          -e "docker_hub_user=${{ secrets.DOCKER_USERNAME }}" \
+          --limit petshop-vm \
+          --ssh-common-args="-o ProxyCommand='gcloud compute ssh %r@%h --zone us-central1-a --command 'exit' --ssh-flag=-W %h:%p'"
+

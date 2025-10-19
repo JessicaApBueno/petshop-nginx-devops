@@ -8,11 +8,9 @@ provider "google" {
 }
 
 # --- Data Source: Encontra o ID da Imagem Ubuntu mais Recente ---
-# Garante que o Terraform sempre use a imagem correta.
 data "google_compute_image" "ubuntu_lts" {
-  # Nome da família de imagens mais estável (Ubuntu 22.04 LTS)
   family  = "ubuntu-2204-lts"
-  project = "ubuntu-os-cloud" 
+  project = "ubuntu-os-cloud"
 }
 
 # --- RECURSO 1: Regra de Firewall para HTTP (Porta 80) ---
@@ -43,7 +41,8 @@ resource "google_compute_firewall" "ssh_firewall" {
   target_tags = ["http-server"] # Aplica a regra na sua VM
 }
 
-# --- RECURSO 2: Máquina Virtual (VM) e2-micro (Always Free Tier) ---
+
+# --- RECURSO 3: Máquina Virtual (VM) e2-micro (Always Free Tier) ---
 resource "google_compute_instance" "web_server" {
   name         = "petshop-nginx-vm"
   machine_type = "e2-micro"
@@ -52,13 +51,11 @@ resource "google_compute_instance" "web_server" {
   # Configuração de Boot Disk
   boot_disk {
     initialize_params {
-      # REFERÊNCIA CORRETA: Usa o self_link da fonte de dados encontrada
       image = data.google_compute_image.ubuntu_lts.self_link
       size = 10 
     }
   }
 
-  # Configuração da Placa de Rede
   network_interface {
     network = "default"
     access_config {} 
@@ -66,9 +63,11 @@ resource "google_compute_instance" "web_server" {
 
   tags = ["http-server"]
 
-  metadata = {
-    # Isso resolve o erro de "Permission denied" ao usar o Ansible
-    ssh-keys = "ubuntu:{{ file(\"~/.ssh/github_deploy_key.pub\") }}" 
+  # AUTENTICAÇÃO VIA GCP IDENTITY (Removemos a injeção manual de SSH)
+  service_account {
+    # SUBSTITUA PELO SEU E-MAIL DA CONTA DE SERVIÇO
+    email  ="1049175473029-compute@developer.gserviceaccount.com" 
+    scopes = ["cloud-platform"]
   }
 
   lifecycle {
@@ -76,8 +75,7 @@ resource "google_compute_instance" "web_server" {
   }
 }
 
-# --- RECURSO 3: Saída do IP Público ---
+# --- RECURSO 4: Saída do IP Público ---
 output "external_ip" {
   value = google_compute_instance.web_server.network_interface.0.access_config.0.nat_ip
 }
-
