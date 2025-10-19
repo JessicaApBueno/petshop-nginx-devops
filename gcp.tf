@@ -41,7 +41,25 @@ resource "google_compute_firewall" "ssh_firewall" {
   target_tags = ["http-server"] # Aplica a regra na sua VM
 }
 
+# Firewall para permitir conexão SSH apenas pelo Google IAP
+resource "google_compute_firewall" "allow_iap_ssh" {
+  name    = "allow-iap-ssh"
+  network = "default" # Ou o nome da sua rede VPC
 
+  # Permite tráfego de entrada (ingress)
+  direction = "INGRESS"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  # IMPORTANTE: Este é o intervalo de IPs que o serviço IAP do Google usa
+  source_ranges = ["35.235.240.0/20"]
+
+  # Aplica esta regra a qualquer VM com a tag que definimos
+  target_tags = ["allow-ssh-via-iap"]
+}
 # --- RECURSO 3: Máquina Virtual (VM) e2-micro (Always Free Tier) ---
 resource "google_compute_instance" "web_server" {
   name         = "petshop-nginx-vm"
@@ -61,7 +79,7 @@ resource "google_compute_instance" "web_server" {
     access_config {} 
   }
 
-  tags = ["http-server"]
+  tags = ["http-server", "allow-ssh-via-iap"]
 
   # AUTENTICAÇÃO VIA GCP IDENTITY (Removemos a injeção manual de SSH)
   service_account {
