@@ -51,9 +51,16 @@ jobs:
         pip install docker apache-libcloud
         
     - name: 3. Executar o Playbook Ansible (Deploy Final)
-      # Aqui, o Ansible usa o gcloud como proxy para conectar-se à VM
+      # A variável VM_IP não é mais necessária aqui, pois não usamos mais o IP.
+      # env:
+      #   VM_IP: ${{ needs.terraform.outputs.vm_ip }}
       run: |
-        echo "Preparando inventário com IP: ${{ secrets.VM_IP_ADDRESS }}"
+        echo "Instalando a coleção Ansible para Google Cloud..."
+        ansible-galaxy collection install google.cloud
+
+       echo "Executando o Playbook..."
+       ansible-playbook -i hosts deploy-cd.yml
+
         # 1. Substitui o placeholder '{{ vm_ip }}' no inventário com o IP real da Secret
         sed -i "s/{{ vm_ip }}/${{ secrets.VM_IP_ADDRESS }}/g" inventory.ini
         
