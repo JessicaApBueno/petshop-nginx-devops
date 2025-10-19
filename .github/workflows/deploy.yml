@@ -1,65 +1,54 @@
-name: Deploy Infraestrutura e Aplicação (Terraform + Ansible)
+# Nome do Workflow
+name: CI/CD - Deploy com Ansible na VM do GCP
 
+# Gatilho (CORRIGIDO): Executar em push para a 'main' OU quando um PR for aberto para a 'main'
 on:
+  # Gatilho para quando o código for merged na branch principal
   push:
     branches:
       - main
-  workflow_dispatch:
+  # Gatilho SEGURO para Pull Requests, que tem acesso aos secrets
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
 
 jobs:
-  # --- JOB 1: PROVISIONAR A INFRAESTRUTURA ---
-  terraform:
-    name: 'Provisionar Infraestrutura (Terraform)'
+  deploy-to-gcp-vm:
+    name: Deploy com Ansible no GCP
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      # ETAPA 1: FAZER O CHECKOUT DO CÓDIGO
+      # Importante: Com 'pull_request_target', fazemos o checkout do código da branch base (main)
+      # que é seguro e contém a versão confiável do workflow.
+      - name: Checkout do código do repositório
         uses: actions/checkout@v4
 
-      - name: Autenticar com Google Cloud
-        id: 'auth'
+      # ETAPA 2: AUTENTICAÇÃO COM O GOOGLE CLOUD
+      - name: Autenticação com Google Cloud
+        id: auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Apply
-        run: terraform apply --auto-approve
-
-  # --- JOB 2: CONFIGURAR A VM COM ANSIBLE ---
-  ansible:
-    name: 'Configurar VM (Ansible)'
-    runs-on: ubuntu-latest
-    needs: terraform # Depende do sucesso do job do Terraform
-
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
-      - name: Autenticar com Google Cloud
-        id: 'auth'
-        uses: 'google-github-actions/auth@v2'
+      # ETAPA 3: CONFIGURAÇÃO DO SDK DO GCLOUD
+      - name: Configuração do gcloud CLI
+        uses: 'google-github-actions/setup-gcloud@v2'
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          project_id: 'storied-radius-470316-f6'
 
-      # ### CORREÇÃO APLICADA AQUI ###
-      # Juntamos a instalação e a execução em um único passo
-      - name: Instalar dependências e Executar o Playbook Ansible
+      # ETAPA 4: INSTALAÇÃO DO ANSIBLE E DA COLEÇÃO GCP
+      - name: Instalar Ansible e a coleção GCP
         run: |
-          # 1. Instala as ferramentas base
-          echo "Instalando dependências do sistema..."
           sudo apt-get update
-          sudo apt-get install -y google-cloud-cli ansible
-
-          # 2. Instala a coleção do Ansible para o GCP
-          echo "Instalando a coleção Ansible para Google Cloud..."
+          sudo apt-get install -y python3-pip
+          pip3 install --upgrade pip
+          pip3 install ansible google-auth requests
           ansible-galaxy collection install google.cloud
-          
-          # 3. Executa o playbook
-          echo "Executando o Playbook..."
-          ansible-playbook -i hosts deploy-cd.yml
+
+      # ETAPA 5: EXECUÇÃO DO PLAYBOOK
+      - name: Executar o Playbook Ansible
+        run: |
+          # !! IMPORTANTE: Altere 'playbook.yml' se o seu arquivo tiver outro nome !!
+          ansible-playbook -i inventory.ini deploy-cd.yml
